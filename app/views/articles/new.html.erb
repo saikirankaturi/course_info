@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Course Info</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top" style="top:50px;background:#D8D8D8;height:70px;">
+			<br>
+			<div class="container">
+				<div class="nav navbar-nav">
+					<h4> <b> Adding a new course</b> </h4>
+				</div>
+			</div>
+		</nav>
+		
+		<div class="container" style="padding-top:75px;">
+			<%= form_for @article, :class=>'form-horizontal' do |var_form| %>
+				<% if @article.errors.any? %>
+					<h2>Errors</h2>
+					<ul>
+						<% @article.errors.full_messages.each do |message| %>
+							<li><%= message %></li>
+						<% end %>
+					</ul>
+				<%end%>
+				<div class="form-group">
+					<%= var_form.label :course_code, "Course Code", :for=>"course_code", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :course_code, :class=>"form-control", :id=>"course_code", :placeholder=>"CS 101"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :name, "Course Name", :for=>"name", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :name, :class=>"form-control", :id=>"name", :placeholder=>"Computer Programming and Utilization"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_total_credits, "Total Credits", :for=>"org_total_credits", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_total_credits, :class=>"form-control", :id=>"org_total_credits", :placeholder=>"6"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_type, "Course Type", :for=>"org_type", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_type, :class=>"form-control", :id=>"org_type", :placeholder=>"T"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_lecture_credits, "Lecture Credits", :for=>"org_lecture_credits", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_lecture_credits, :class=>"form-control", :id=>"org_lecture_credits", :placeholder=>"6"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_tutorial, "Tutorial Credits", :for=>"org_tutorial", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_tutorial, :class=>"form-control", :id=>"org_tutorial", :placeholder=>"2"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_practical, "Practice Credits", :for=>"org_practical", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_practical, :class=>"form-control", :id=>"org_practical", :placeholder=>"0"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_self_study, "Self study Credits", :for=>"org_self_study", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_self_study, :class=>"form-control", :id=>"org_self_study", :placeholder=>"0"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_half_semester, "Half Semester(Y or N)", :for=>"org_half_semester", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_half_semester, :class=>"form-control", :id=>"org_half_semester", :placeholder=>"N"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_prerequisite, "Prerequisite(s)", :for=>"org_prerequisite", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_field :org_prerequisite, :class=>"form-control", :id=>"org_prerequisite", :placeholder=>"Nil"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_text_reference, "Text References", :for=>"org_text_reference", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_area :org_text_reference, :class=>"form-control", :rows=>"5", :id=>"org_text_reference", :placeholder=>"Text References"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= var_form.label :org_content, "Course Content", :for=>"org_content", :class=>"col-sm-2 control-label"%> 
+					<div class="col-sm-10">
+						<%= var_form.text_area :org_content, :class=>"form-control", :rows=>"5", :id=>"org_content", :placeholder=>"Course Content"%> <br/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<%= var_form.submit "CONFIRM", :class=>"btn btn-success"%> <br/> <br/>
+						<%= link_to "Go back to Courses", root_url, :class=>"btn btn-danger", :role=>"button" %><br/><br/><br/>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	</body>
+</html>
+
+
+
+

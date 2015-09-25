@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html ng-app="myApp" >
+	<head>
+		<title>Course Info</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script>
+			var app = angular.module('myApp', []);
+			app.controller('myCtrl', function($scope) {
+				$scope.items=[
+					{value:'0', name:'Aerospace Engineering'},
+					{value:'1', name:'Applied Statistics and Informatics'},
+					{value:'2', name:'Biosciences & Bioengineering'},
+					{value:'3', name:'Chemical Engineering'},			
+					{value:'4', name:'Chemistry'},
+					{value:'5', name:'Civil Engineering'},
+					{value:'6', name:'Computer Science and Engineering'},
+					{value:'7', name:'Earth Sciences'},
+					{value:'8', name:'Electrical Engineering'},
+					{value:'9', name:'Energy Science and Engineering'},
+					{value:'10', name:'Engineering Physics'},
+					{value:'11', name:'Humanities and Social Sciences'},
+					{value:'12', name:'Mathematics'},
+					{value:'13', name:'Mechanical Engineering'},
+					{value:'14', name:'Metallurgical Engineering and Materials Science'},
+					{value:'15', name:'Physics'},
+					{value:'16', name:'Centre for Entrepreneurship'},
+					{value:'17', name:'Centre for Environmental Science & Engineering'},
+					{value:'18', name:'Centre for Research in Nano Technology and Sciences'},
+					{value:'19', name:'Centre for Technology Alternatives for Rural Areas'},
+					{value:'20', name:'Centre for Urban Science and Engineering'},
+					{value:'21', name:'Centre of Studies in Resources Engineering'},
+					{value:'22', name:'Animation'},
+					{value:'23', name:'Industrial Design Centre'},
+					{value:'24', name:'Interaction Design'},
+					{value:'25', name:'Mobility and Vehicle Design'},
+					{value:'26', name:'Visual Communication'},
+					{value:'27', name:'Climate Studies'},
+					{value:'28', name:'Educational Technology'},
+					{value:'29', name:'Industrial Engineering and Operations Research'},
+					{value:'30', name:'Systems and Control Engineering'},
+					{value:'31', name:'Shailesh J. Mehta School of Management'},
+					{value:'32', name:'Other Courses'}
+				];
+				$scope.form = {type:$scope.items[0]};
+				$scope.equaliser = function(msgAuthor, currentUser) {
+					return angular.equals(msgAuthor, currentUser);
+				}
+			});
+		</script>
+	</head>
+	<body ng-controller="myCtrl">
+		<nav class="navbar navbar-fixed-top" style="top:50px;background:#D8D8D8;height:70px;">
+			<br>
+			<div class="container">
+				<div class="nav navbar-nav">
+					<h4> <b> Course Information at IIT BOMBAY </b> </h4>
+				</div>
+				<div class="nav navbar-nav navbar-right">
+					<%if current_user%>
+						<% if current_user.email == "kranthi@gmail.com" ||  current_user.email == "kiranking@gmail.com"%>
+							<%= link_to "Add a new course", new_article_path, :class=>'btn btn-success', :role=>'button'%>
+						<%end%>
+						<% if current_user.prof_student == "Faculty" || current_user.email == "kranthi@gmail.com" ||  current_user.email == "kiranking@gmail.com" %>
+							<%= link_to "Add Teaching Course", edit_user_path(current_user), :class=>'btn btn-primary', :role=>'button', :title=>'select the course that is being taight by you'%>
+						<%end%>
+					<%end%>
+				</div>
+			</div>
+		</nav>
+		<div class="container" style="padding-top:75px;">
+			<% if current_user %>
+				<div class="form-group">
+					<label for="select_fac" class="col-sm-2 control-label">Choose Department</label>
+					<div class="col-sm-10">
+						<select ng-model="form.type" required ng-options="item.name for item in items" class="form-control options"></select>
+					</div>
+				</div><br/><br/>
+				<div class="well">
+					<table class = "table table-hover table-striped" id="regions">
+						<thead>
+							<tr>
+								<th>Sr No.</th>
+								<th>Course Code</th>
+								<th>Course Name</th>
+								<th>View more</th>
+								<% if current_user.email == "kranthi@gmail.com" ||  current_user.email == "kiranking@gmail.com"%>
+									<th>Edit</th>
+									<th>Delete</th>
+								<%end%>
+							</tr>
+						</thead>
+						<%for i in 0..@dept_count-1%> 
+							<tbody ng-if="equaliser(form.type.value,'<%=i%>')">
+								<%sr_no=1%>
+								<% @article_dept[i].each do |article| %>
+									<tr>
+										<td>
+											<%=sr_no%>
+										</td>
+										<td>
+											<%= article.course_code %> <br/>
+										</td>
+										<td>
+											<%=article.name%>
+										</td>
+										<td>
+											<%=link_to "More Info", article, :class=>'btn btn-success', :role=>'button'%>
+										</td>
+										<% if current_user.email == "kranthi@gmail.com" ||  current_user.email == "kiranking@gmail.com"%>
+											<td>
+												<%=link_to "Edit", edit_article_path(article), :class=>'btn btn-warning', :role=>'button'%>
+											</td>
+											<td>
+												<%=link_to 'Delete', article, :method=> :delete, data: { confirm: 'Are you sure you want to delete this Course?'}, :class=>'btn btn-danger', :role=>'button'%>
+											</td>
+										<%end%>
+									</tr>
+									<%sr_no=sr_no+1%>
+								<%end%>
+							</tbody>
+						<%end%>
+					</table>
+				</div>
+			<% else %>
+				<p>Kindly login using your ids in order to see the information about courses. Sign Up if you had never registered.</p>
+			<%end%>
+		</div>
+		<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	</body>
+</html>

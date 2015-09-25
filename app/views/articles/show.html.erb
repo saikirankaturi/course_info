@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Course Info</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			.detailBox {
+				width:100%;
+				border:1px solid #bbb;
+			}
+			.titleBox {
+				background-color:#fdfdfd;
+				padding:10px;
+			}
+			.titleBox label{
+			  color:#444;
+			  margin:0;
+			  display:inline-block;
+			}
+			
+			.commentBox {
+				padding:10px;
+				border-top:1px dotted #bbb;
+			}
+			.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+				width:80%;
+			}
+			.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+				width:18%;
+			}
+			.taskDescription {
+				margin-top:10px 0;
+			}
+			.commentList {
+				padding:0;
+				list-style:none;
+				overflow:auto;
+			}
+			.commentList li {
+				margin:0;
+				margin-top:10px;
+			}
+			.commentList li > div {
+				display:table-cell;
+			}
+			.commentText p {
+				margin:0;
+			}
+			ul{
+				list-style-type: none;
+			}
+			.sub-text {
+				color:#aaa;
+				font-family:verdana;
+				font-size:13px;
+			}
+			.actionBox {
+				border-top:1px dotted #bbb;
+				padding:10px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-fixed-top" style="top:50px;background:#D8D8D8;height:70px;">
+			<br>
+			<div class="container">
+				<div class="nav navbar-nav">
+					<h4> <b> Course Information of <%=@article.course_code%>(<%=@article.name%>)</b> </h4>
+				</div>
+				<div class="nav navbar-nav navbar-right">
+					<%if current_user%>
+						<% if current_user.email == "kranthi@gmail.com" ||  current_user.email == "kiranking@gmail.com"%>
+							<%= link_to "Add a new course", new_article_path, :class=>'btn btn-success', :role=>'button'%>
+						<%end%>
+						<% if current_user.prof_student == "Faculty" || current_user.email == "kranthi@gmail.com" ||  current_user.email == "kiranking@gmail.com" %>
+							<%= link_to "Add Teaching Course", edit_user_path(current_user), :class=>'btn btn-primary', :role=>'button', :title=>'select the course that is being taight by you'%>
+						<%end%>
+					<%end%>
+				</div>
+			</div>
+		</nav>
+		<div class="container" style="padding-top:75px;">
+			<%if @user%>
+				<div class="info">
+					<p> Instructor's Name: <%=@user.name%> </p>
+					<p> Instructor's email: <%=@user.email%> </p>
+				</div>
+			<%end%>
+			<table class = "table table-bordered" id="regions">
+				<thead>
+					<tr>
+						<th>Fields</th>
+					    <th>Original Content</th>		
+					    <th>Modified Content</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width:20%">Course Code</td>
+						<td style="width:40%"><%=@article.course_code%></td>		
+						<td style="width:40%"><%=@article.course_code%></td>
+					</tr>
+					<tr>
+						<td>Course Name</td>
+						<td><%=@article.name%></td>		
+						<td><%=@article.name%></td>
+					</tr>
+					<tr>
+						<td>Total Credits</td>
+						<td><%=@article.org_total_credits%></td>		
+						<td><%=@article.mod_total_credits%></td>
+					</tr>
+					<tr>
+						<td>Type</td>
+						<td><%=@article.org_type%></td>		
+						<td><%=@article.mod_type%></td>
+					</tr>
+					<tr>
+						<td>Lecture</td>
+						<td><%=@article.org_lecture_credits%></td>		
+						<td><%=@article.mod_lecture_credits%></td>
+					</tr>
+					<tr>
+						<td>Tutorial</td>
+						<td><%=@article.org_tutorial%></td>		
+						<td><%=@article.mod_tutorial%></td>
+					</tr>
+					<tr>
+						<td>Practical</td>
+						<td><%=@article.org_practical%></td>		
+						<td><%=@article.mod_practical%></td>
+					</tr>
+					<tr>
+						<td>Self study</td>
+						<td><%=@article.org_self_study%></td>		
+						<td><%=@article.mod_self_study%></td>
+					</tr>
+					<tr>
+						<td>Half Semester</td>
+						<td><%=@article.org_half_semester%></td>		
+						<td><%=@article.mod_half_semester%></td>
+					</tr>
+					<tr>
+						<td>Prerequisite</td>
+						<td><%=@article.org_prerequisite%></td>		
+						<td><%=@article.mod_prerequisite%></td>
+					</tr>
+					<tr>
+						<td>Text Reference</td>
+						<td><%=@article.org_text_reference%></td>		
+						<td><%=@article.mod_text_reference%></td>
+					</tr>
+					<tr>
+						<td>Description</td>
+						<td><%=@article.org_content%></td>		
+						<td><%=@article.mod_content%></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	<%if current_user%>
+		<%if (current_user.prof_student=="Faculty" && current_user.email==@article.ind) || current_user.email == "kranthi@gmail.com" ||  current_user.email == "kiranking@gmail.com"%> 
+			<%=link_to "Edit Modified Content", edit_article_path(@article), :class=>'btn btn-success', :role=>'button', :style=>""%></br></br>
+		<%end%>
+	<%end%>
+
+
+
+<!--
+*************************************************************************************************
+-->
+
+
+
+
+<div class="detailBox">
+    <div class="titleBox">
+      <label>Comment Box</label>
+        <button type="button" class="close" aria-hidden="true">&times;</button>
+    </div>
+    <div class="commentBox">
+        <p class="taskDescription">This is a discussion box where students can comment on the courses and their description and Instructors could reply to them.</p>
+    </div>
+    <div class="actionBox">
+        <ul class="commentList">
+			<% @posts.each do |post| %>
+				<%if post.ind == @article.id.to_s %>
+					<li>
+						<div class="commentText">
+							<p style="color:blue;"><%=post.name%>(<%=post.email%>) <%if post.email==@article.ind%> (instructor)<%end%></p>
+							<p class=""><%=post.comment%></p> <span class="date sub-text"><%="#{time_ago_in_words(post.created_at)} ago"%></span><br/>
+							<%if current_user.email == "kiranking@gmail.com" %> 
+								<%=link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure you want to delete this post?'},:class=>'btn btn-danger', :role=>'button'%>
+							<%end%>
+						</div>
+					</li>
+					<hr/>
+				<%end%>
+			<%end%>
+        </ul>
+    </div>
+</div>
+<br/>
+<%= form_for  @post, :url => {:action => "save"}, :class=>'form-inline' do |f| %>
+	<% if @post.errors.any? %>
+		<div class="error_messages">
+			<h2>Comment is invalid</h2>
+			<ul>
+				<% @post.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+	<div class="form-group">
+		<%= f.text_area :comment, :rows=>"3", :class=>"form-control", :placeholder=>"add comment"%>
+	</div>
+	<%= f.submit "Add my comment", :class=>"btn btn-success"%> <br/> <br/>
+<%end%>
+<br/>
+<br/>
+
+</body>
+</html>

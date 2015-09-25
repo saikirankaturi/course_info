@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Course Info</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">		
+		<%= stylesheet_link_tag    "application", media: "all" %>
+		<%= javascript_include_tag "application" %>  
+	</head>
+	<body>
+	   <nav class="navbar navbar-inverse navbar-fixed-top" style="height:50px;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div id="name" class="navbar-brand">
+					<% if current_user %>
+						<%=current_user.name%>
+					<%else%>
+						Course Info
+					<%end%>
+				</div>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li title="Explore courses at IIT BOMBAY!"><%= link_to "HOME", root_url%></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li title="Read how to use portal" style="cursor:pointer"><a data-toggle="modal" data-target="#instructions"><span class="glyphicon glyphicon-info-sign"></span> Instructions</a></li>
+					<li title="Read about this portal" style="cursor:pointer"><a data-toggle="modal" data-target="#about"><span class="glyphicon glyphicon-flash"></span> About</a></li>
+					<% if current_user %>
+						<li>
+							<%= link_to logout_path do %>
+								<span class="glyphicon glyphicon-log-out"></span>LogOut
+							<% end %>
+						</li>
+					<% else %>
+						<li>
+							<%= link_to login_path do %>
+								<span class="glyphicon glyphicon-log-in"></span>LogIn
+							<% end %>
+						</li>
+						<li>
+							<%= link_to signup_path do %>
+								<span class="glyphicon glyphicon-phone"></span>SignUp
+							<% end %>
+						</li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	  
+	  <div class="modal fade" id="instructions" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+  			<div class="modal-content">
+    			<div class="modal-header">
+     				<button type="button" class="close" data-dismiss="modal">&times;</button>
+      				<h4 class="modal-title">Instructions</h4>
+    			</div>
+    			<div class="modal-body">
+    				<p>
+						Students and Faculty can login using their ids. Kindly signIn if you never registered. Faculty can choose which course they are 
+						teaching and after choosing they will be given edit permissions of that particular course's modified content by clicking on More
+						Info button and navigating to Edit Modified Content link. 
+    				</p>
+    				<p>
+						Students can make comments down expressing their views on courses. Faculty can reply and clarify the doubts of students.
+    				</p>
+    			</div>
+    			<div class="modal-footer">
+      				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+  			</div>
+  		</div>
+	</div>
+	
+	<div class="modal fade" id="about" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+  			<div class="modal-content">
+    			<div class="modal-header">
+     				<button type="button" class="close" data-dismiss="modal">&times;</button>
+      				<h4 class="modal-title">About</h4>
+    			</div>
+    			<div class="modal-body">
+					<p>
+						This is a Course Info portal developed by K SAI KIRAN and V KRANTHI, IInd year UGs of IIT BOMBAY under guidance of 
+						Prof. Sharat Chandran. This portal allows students and faculty to login and view different courses at IIT BOMBAY.
+					</p>
+					<p>
+						Please refer to the instructions page to know how to use this portal.
+						Thanks.
+					</p>
+    			</div>
+    			<div class="modal-footer">
+      				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+  			</div>
+  		</div>
+	</div>
+	<div class="container" style="padding-top:120px;">
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, id: "flash_#{name}" %>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>
