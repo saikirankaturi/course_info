@@ -19,6 +19,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'sprockets'
 gem 'smarter_csv'
 
 # To use ActiveModel has_secure_password

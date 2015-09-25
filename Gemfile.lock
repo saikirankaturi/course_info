@@ -112,5 +112,6 @@ DEPENDENCIES
   rails (= 3.2.1)
   sass-rails (~> 3.2.3)
   smarter_csv
+  sprockets
   sqlite3
   uglifier (>= 1.0.3)
